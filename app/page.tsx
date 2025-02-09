@@ -4,14 +4,14 @@ export default function Page() {
   return (
     <section>
       <h1 className="mb-8 text-2xl font-semibold tracking-tighter">
-        My Portfolio
+        AERO9610 - The Space Segment
       </h1>
       <p className="mb-4">
-        {`I'm a Vim enthusiast and tab advocate, finding unmatched efficiency in
-        Vim's keystroke commands and tabs' flexibility for personal viewing
-        preferences. This extends to my support for static typing, where its
-        early error detection ensures cleaner code, and my preference for dark
-        mode, which eases long coding sessions by reducing eye strain.`}
+        {`Hello, welcome! This website contains my resources for students 
+        taking AERO9610 - The Space Segment. Right now it's mainly a place
+        for hosting my notes for Princeton's Spacecraft Control Toolbox (SCT)
+        but may include other stuff in the future. You can find each week's
+        tutorial by clicking on the links below. Happy studying! 🚀`}
       </p>
       <div className="my-8">
         <BlogPosts />

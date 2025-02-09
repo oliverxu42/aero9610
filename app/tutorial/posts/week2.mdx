@@ -1,0 +1,59 @@
+---
+title: '2. Simulating CubeSat orbit and attitude dynamics'
+summary: 'In the ever-evolving landscape of software development, the debate between dynamic and static typing continues to be a hot topic.'
+---
+
+By now you should have successfully set up your SCT environment and be able to run some basic simulations via the DemoPSS GUI. If you aren’t at this stage yet please review week 1’s tutorial here: [INSERT LINK].
+
+# Preamble
+
+---
+
+In this tutorial we will be simulating a dynamical model of a CubeSat in orbit and looking at how disturbances affect its attitude profile.
+
+## Theory
+
+# Tutorial
+
+---
+
+Let’s begin by running the simulation:
+
+```matlab
+% Make sure you are in the right directory
+>> pwd
+/SCTAcademic/CubeSat/Demos/Simulation
+
+% Run the simulation
+>> CubeSatSimulation
+```
+
+# Questions
+
+---
+
+1. Why does the altitude of the satellite decrease?
+2. What is the largest torque acting on the CubeSat?
+3. Can you fix the problem when trying to plot radiation torques?
+
+# Things to try
+
+---
+
+1. Plot the force due to spherical gravity.
+2. Turn surface disturbances off by setting `d.surfData` to empty. What difference does the make?
+3. Comment out or change the fixed dipole in the for-loop on line 157. What do you notice?
+4. Modify the code to simulate a 1U instead of a 3U. How does the size impact on its dynamics?
+
+# Simulating orbit/attitude profiles for your chosen mission
+
+---
+
+For your assignment, you will be _required_ to produce SCT simulations of your work to prove that your design is viable.
+
+The first step in the design of a satellite mission is usually determining the orbital profile of your spacecraft. From there you can work out what forces and/or torques need to be considered and how it will impact your attitude profiles. Thankfully, we can do all of this SCT!
+
+1. Start out by determining your initial orbit and attitude values by considering your specific mission requirements.
+2. Next, think about what forces/torques need to be considered for your specific mission e.g. drag is much more significant for satellites in LEO than higher up in GEO.
+3. Work out your RHS of the ordinary differential equations.
+4. Simulate this scenario in SCT, generate relevant plots and provide necessary analysis - present them in your reports!

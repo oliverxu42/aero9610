@@ -1,20 +1,21 @@
-import { notFound } from 'next/navigation'
-import { CustomMDX } from 'app/components/mdx'
-import { formatDate, getBlogPosts } from 'app/blog/utils'
-import { baseUrl } from 'app/sitemap'
+import { notFound } from 'next/navigation';
+import { CustomMDX } from 'app/components/mdx';
+import { formatDate, getBlogPosts } from 'app/tutorial/utils';
+import { baseUrl } from 'app/sitemap';
+import Link from 'next/link';
 
 export async function generateStaticParams() {
-  let posts = getBlogPosts()
+  let posts = getBlogPosts();
 
   return posts.map((post) => ({
     slug: post.slug,
-  }))
+  }));
 }
 
 export function generateMetadata({ params }) {
-  let post = getBlogPosts().find((post) => post.slug === params.slug)
+  let post = getBlogPosts().find((post) => post.slug === params.slug);
   if (!post) {
-    return
+    return;
   }
 
   let {
@@ -22,10 +23,10 @@ export function generateMetadata({ params }) {
     publishedAt: publishedTime,
     summary: description,
     image,
-  } = post.metadata
+  } = post.metadata;
   let ogImage = image
     ? image
-    : `${baseUrl}/og?title=${encodeURIComponent(title)}`
+    : `${baseUrl}/og?title=${encodeURIComponent(title)}`;
 
   return {
     title,
@@ -48,20 +49,20 @@ export function generateMetadata({ params }) {
       description,
       images: [ogImage],
     },
-  }
+  };
 }
 
 export default function Blog({ params }) {
-  let post = getBlogPosts().find((post) => post.slug === params.slug)
+  let post = getBlogPosts().find((post) => post.slug === params.slug);
 
   if (!post) {
-    notFound()
+    notFound();
   }
 
   return (
     <section>
       <script
-        type="application/ld+json"
+        type='application/ld+json'
         suppressHydrationWarning
         dangerouslySetInnerHTML={{
           __html: JSON.stringify({
@@ -82,17 +83,36 @@ export default function Blog({ params }) {
           }),
         }}
       />
-      <h1 className="title font-semibold text-2xl tracking-tighter">
+      <Link href={'/'}>
+        <svg
+          width='24px'
+          height='24px'
+          viewBox='0 0 48 48'
+          fill='none'
+          xmlns='http://www.w3.org/2000/svg'
+        >
+          <path
+            d='M12.9998 8L6 14L12.9998 21'
+            stroke='#000000'
+            stroke-width='4'
+            stroke-linecap='round'
+            stroke-linejoin='round'
+          />
+          <path
+            d='M6 14H28.9938C35.8768 14 41.7221 19.6204 41.9904 26.5C42.2739 33.7696 36.2671 40 28.9938 40H11.9984'
+            stroke='#000000'
+            stroke-width='4'
+            stroke-linecap='round'
+            stroke-linejoin='round'
+          />
+        </svg>
+      </Link>
+      <h1 className='title font-semibold text-4xl tracking-tighter mt-6'>
         {post.metadata.title}
       </h1>
-      <div className="flex justify-between items-center mt-2 mb-8 text-sm">
-        <p className="text-sm text-neutral-600 dark:text-neutral-400">
-          {formatDate(post.metadata.publishedAt)}
-        </p>
-      </div>
-      <article className="prose">
+      <article className='prose'>
         <CustomMDX source={post.content} />
       </article>
     </section>
-  )
+  );
 }
