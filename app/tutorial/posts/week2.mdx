@@ -1,21 +1,20 @@
 ---
 title: '2. Simulating CubeSat orbit and attitude dynamics'
-summary: 'In the ever-evolving landscape of software development, the debate between dynamic and static typing continues to be a hot topic.'
+summary: 'Simulating a dynamical model of a CubeSat in orbit and looking at how disturbances affect its attitude profile'
 ---
 
-By now you should have successfully set up your SCT environment and be able to run some basic simulations via the DemoPSS GUI. If you aren’t at this stage yet please review week 1’s tutorial here: [INSERT LINK].
+By now you should have successfully set up your SCT environment and be able to run some basic simulations via the DemoPSS GUI. If you aren’t at this stage yet please review Week 1’s workshop [here](https://aero9610.vercel.app/tutorial/week1).
 
 # Preamble
-
----
 
 In this tutorial we will be simulating a dynamical model of a CubeSat in orbit and looking at how disturbances affect its attitude profile.
 
 ## Theory
+The space environment subjects satellites to a number of torques and disturbances e.g. drag, solar radiation pressure etc. These disturbances must be effectively controlled to ensure proper and safe operation. Using SCT, we can simulate a dynamical model of a CubeSat and analyse its attitude profiles which we can use to guide our satellite’s design.
+
+Have a read through of Chapter 14 from Spacecraft Attitude and Orbit Control textbook and Lecture Slides from Week 2.2.
 
 # Tutorial
-
----
 
 Let’s begin by running the simulation:
 
@@ -30,24 +29,21 @@ Let’s begin by running the simulation:
 
 # Questions
 
----
-
 1. Why does the altitude of the satellite decrease?
 2. What is the largest torque acting on the CubeSat?
 3. Can you fix the problem when trying to plot radiation torques?
 
 # Things to try
 
----
-
 1. Plot the force due to spherical gravity.
 2. Turn surface disturbances off by setting `d.surfData` to empty. What difference does the make?
 3. Comment out or change the fixed dipole in the for-loop on line 157. What do you notice?
 4. Modify the code to simulate a 1U instead of a 3U. How does the size impact on its dynamics?
 
-# Simulating orbit/attitude profiles for your chosen mission
+# Additional examples
+`SCDisturbanceAnalysis.m` in the directory of `/SCTAcademic/SC/Demos/SystemDesign` is another good one to have a look at, along with numerous other examples in `SCTAcademic/CubeSat/Demos/Simulation` which you can check out for simulating disturbances.
 
----
+# Simulating orbit/attitude profiles for your chosen mission
 
 For your assignment, you will be _required_ to produce SCT simulations of your work to prove that your design is viable.
 
