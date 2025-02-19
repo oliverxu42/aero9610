@@ -1,4 +1,99 @@
 ---
-title: '5.  Simulating a CubeSat power system'
-summary: 'Explore the enduring debate between using spaces and tabs for code indentation, and why this choice matters more than you might think.'
+title: "5. Simulating a CubeSat power system"
+summary: "Explore the enduring debate between using spaces and tabs for code indentation, and why this choice matters more than you might think."
 ---
+
+# Preamble
+
+Power is an essential sub-system for all spacecraft; with unique design challenges such as dealing with eclipse periods and often times complex requirements, it is essential that software simulations be used throughout the design process to ensure that that this sub-system is accurately and sufficiently designed to keep the spacecraft powered under all mission conditions.
+
+## Theory
+
+See Lecture Slides from Week 5 and have a read of Chapter 24 from Spacecraft Attitude and Orbit Control, Volume 2.
+
+### Power produced by a solar array
+
+$$
+P_a=\eta \rho_a A S
+$$
+
+Where:
+
+- $\eta$ is the conversion efficiency
+- $\rho_a$ is the panel absorptivity
+- $A$ is the solar cell area
+- $S$ is the projected sun flux (about 1367 $W/m^2$)
+
+### Power balance equation
+
+$$
+P_a=P_{rf}+\dot{E}_b + P_s
+$$
+
+Where:
+
+- $P_{rf}$ is the RF power emitted by the antenna
+- $\dot{E}_b$ is the energy stored in the battery
+- $P_s$ is the power transferred by the shunts to the radiator (ignored for this analysis)
+
+# Tutorial
+
+We will begin by simply simulating power generation from a solar array cell before moving to simulations of an entire CubeSat model.
+
+1. Run `SolarCellPower.m` in the directory of `/SCTAcademic/CubeSat/Power`, using the default parameters in the function:
+
+<aside className="my-4">
+
+```matlab
+% Ensure you are in the right directory
+>> pwd
+'~/SCTAcademic/CubeSat/Power/'
+
+% Run the simulation
+>> SolarCellPower
+```
+
+</aside>
+
+You should end up producing a plot like this…
+
+[DEMO RESULTS]
+
+<aside className="bg-violet-50 rounded-lg py-1 px-4 my-4">
+  🤔 **Q.** How is the power calculated and why is it fluctuating? _Hint: Look
+  inside the inbuilt demo and the default struct coded in the `SolarCellPower.m`
+  function._
+</aside>
+
+1. Now let’s simulate an entire CubeSat. Run `CubeSatPowerDemo.m` in the directory of `/SCTAcademic/CubeSat/Demos/Power`
+
+<aside className="my-4">
+
+```matlab
+% Ensure you are in the right directory
+>> pwd
+'~/SCTAcademic/CubeSat/Demos/Power'
+
+% Run the simulation
+>> CubeSatPowerDemo
+```
+
+</aside>
+
+[DEMO RESULTS]
+
+# Conduct a power simulation for your chosen mission
+
+<aside className="bg-violet-50 rounded-lg py-0.5 px-4 my-4">
+  💡 This is a really important sub-system to simulate well as it impacts nearly
+  all other systems and in turn will prove that your spacecraft system design is
+  feasible.
+</aside>
+
+1. Simulate your models/parameters by reflecting on the following questions:
+   1. Given your payload specification, what is the initial power allocation to the rest of
+      the subsystems?
+   2. How much power are you expecting from your power generation solution?
+   3. How many batteries are necessary to meet with the required total battery capacity?
+   4. Relate your concept of operations to different phases and associate which components are on and off during these phases.
+2. Generate plots and present them into your reports with necessary analysis.
