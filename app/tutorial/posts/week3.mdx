@@ -5,26 +5,24 @@ summary: 'Explore the enduring debate between using spaces and tabs for code ind
 
 # Preamble
 
----
-
 In this tutorial we will be simulating a dynamical model of a CubeSat in orbit and looking at how disturbances affect its attitude profile.
 
 ## Theory
 
-# Tutorial
+See Lecture Slides from Week 3.1 and Chapter 8 from Spacecraft Attitude and Orbit Control textbook.
 
----
+# Tutorial
 
 ## Generate CubeSat structures
 
-Inside of `/CubeSat/Utilities` there is a function `CubeSatModel.m` that generates vertices and faces for a CubeSat model.
+Inside of `/CubeSat/Modelling` there is a function `CubeSatModel.m` that generates vertices and faces for a CubeSat model.
 
 Without giving input parameters, this function by default will generate a 6U CubeSat and a 3U CubeSat with deployed solar panels.
 
 ```matlab
 % Make sure you are in the right directory
 >> pwd
-'~/SCTAcademic/CubeSat/Utilities'
+'.../SCTAcademic/CubeSat/Modelling'
 
 % Run the function
 >> CubeSatModel
@@ -32,31 +30,40 @@ Without giving input parameters, this function by default will generate a 6U Cub
 
 You should see the following output:
 
-[IMAGE]
+<aside className='flex justify-center'>![CubeSatModel](/images/3.1.png)</aside>
 
-# Questions
+## Simulation
 
----
+Now, we will simulate a satellite with tilted wings. Run `CubeSatTiltedWings.m` in the directory of `/SCTAcademic/CubeSat/Demos/Design`
+
+```matlab
+% Make sure you are in the right directory
+>> pwd
+'~/SCTAcademic/CubeSat/Demos/Design'
+
+% Run the function
+>> CubeSatTiltedWings
+```
+
+You should generate some plots that look like this:
+
+<aside className='flex justify-center ml-4'>
+  ![CubeSatTiltedWings](/images/3.2.png)
+</aside>
 
 # Things to try
 
----
-
 1. Modify `CubeSatModel` so that the solar panels are perpendicular to the CubeSat body. How does this affect the disturbances?
 2. Change the number of solar panel wings on the CubeSat.
-3. EXTENSION: Change the orientation of the solar wings along the long edge of the CubeSat.
+3. **Extension:** Change the orientation of the solar wings along the long edge of the CubeSat.
 
 # Additional CAD examples
-
----
 
 While the examples in this tutorial have relatively simple structures, if you are interested in creating more complex satellites using the in-built CAD tools you can play around with the examples found in `/SCTAcademic/SC/Demos/CAD` .
 
 If you can generate CAD models for your CubeSat assignment, additional bonus points can be awarded to you. See the Final Report Marking Rubric for more details. 😇
 
 # Conduct a structural simulation for your chosen mission
-
----
 
 1. Adapt the parameters for your own CubeSat.
 2. Generate the shape with deployed solar panels if necessary.
