@@ -10,9 +10,22 @@ By now you should have successfully set up your SCT environment and be able to r
 In this tutorial we will be simulating a dynamical model of a CubeSat in orbit and looking at how disturbances affect its attitude profile.
 
 ## Theory
+
 The space environment subjects satellites to a number of torques and disturbances e.g. drag, solar radiation pressure etc. These disturbances must be effectively controlled to ensure proper and safe operation. Using SCT, we can simulate a dynamical model of a CubeSat and analyse its attitude profiles which we can use to guide our satellite’s design.
 
 Have a read through of Chapter 14 from Spacecraft Attitude and Orbit Control textbook and Lecture Slides from Week 2.2.
+
+### What is a dynamical model?
+
+A mathematical representation of a system's behaviour over time, they capture how a system responds to different inputs or disturbances.
+
+For our spacecraft our dynamical model will consist of the following state vector:
+
+<aside className='flex justify-center'>
+  ![SCT file structure](/images/2.1.png)
+</aside>
+
+The SCT code uses a numerical methods (specifically [RK4](https://en.wikipedia.org/wiki/Runge%E2%80%93Kutta_methods)) to propagate the state vector and simulate our spacecraft over time.
 
 # Tutorial
 
@@ -26,6 +39,14 @@ Let’s begin by running the simulation:
 % Run the simulation
 >> CubeSatSimulation
 ```
+
+<aside className='bg-pink-100 rounded-md p-2 pl-4 mt-8'>
+  ⚠️ Note: `PltOrbit.m` might not work with your MATLAB version if it also has
+  an `earth.mat` file, which conflicts with the `earth.mat` file coming with
+  SCT. The temporary solution is either to remove the path of the MATLAB
+  `earth.mat` or change the name of SCT’s `earth.mat` (which is located at
+  `SCTAcademic\SC\SCMat`) as well as updating the calling code in `PltOrbit.m`
+</aside>
 
 # Questions
 
@@ -41,6 +62,7 @@ Let’s begin by running the simulation:
 4. Modify the code to simulate a 1U instead of a 3U. How does the size impact on its dynamics?
 
 # Additional examples
+
 `SCDisturbanceAnalysis.m` in the directory of `/SCTAcademic/SC/Demos/SystemDesign` is another good one to have a look at, along with numerous other examples in `SCTAcademic/CubeSat/Demos/Simulation` which you can check out for simulating disturbances.
 
 # Simulating orbit/attitude profiles for your chosen mission
