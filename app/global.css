@@ -65,7 +65,7 @@ html {
 }
 
 .prose code {
-  @apply px-1 py-0.5 rounded-lg;
+  @apply px-1 py-0.5 rounded-lg text-orange-600;
 }
 
 .prose pre code {
@@ -136,7 +136,8 @@ table {
   display: block;
   max-width: fit-content;
   overflow-x: auto;
-  white-space: nowrap;
+  white-space: wrap;
+  text-align: left;
 }
 
 .title {

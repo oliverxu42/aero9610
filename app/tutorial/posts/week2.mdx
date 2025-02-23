@@ -34,7 +34,7 @@ Let’s begin by running the simulation:
 ```matlab
 % Make sure you are in the right directory
 >> pwd
-/SCTAcademic/CubeSat/Demos/Simulation
+.../SCTAcademic/CubeSat/Demos/Simulation
 
 % Run the simulation
 >> CubeSatSimulation
@@ -47,6 +47,81 @@ Let’s begin by running the simulation:
   `earth.mat` or change the name of SCT’s `earth.mat` (which is located at
   `SCTAcademic\SC\SCMat`) as well as updating the calling code in `PltOrbit.m`
 </aside>
+
+This simulation includes gravity, drag and radiation pressure. The satellite is initialised pointing to the Earth with a rotation equal to the orbit rate, to nominally maintain that pointing. The z body axis
+is pointed towards the Earth (nadir).
+
+Attitude is maintained with magnetic torquers which are modelled as a dipole (we’ll explore this in more detail in Week 7).
+
+Here’s a brief breakdown of some the key functions:
+
+<table className='mt-8'>
+  <thead>
+    <tr>
+      <th>Function</th>
+      <th>What it does</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>
+        <code>CubeSatModel</code>
+      </td>
+      <td>
+        Generates the faces and vertices for a CubeSat and data for use in{' '}
+        <code>RHSCubeSat</code>. Includes default parameters for wall thickness,
+        material density, optical properties, and additional parameters like
+        solar wing locations.
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <code>DrawCubeSat</code>
+      </td>
+      <td>
+        Renders and displays the output from <code>CubeSatModel</code>.
+      </td>
+    </tr>
+    <tr>
+      <td className='pr-4'>
+        <code>DrawCubeSatSolarAreas</code>
+      </td>
+      <td>Displays the orientation and square areas of the solar wings.</td>
+    </tr>
+    <tr>
+      <td>
+        <code>SunV1</code>
+      </td>
+      <td>
+        Generates a vector to the Sun in the Earth-centered inertial frame,
+        based on a default Julian Date Number (jD0) set as 2010/01/01 00:00:00,
+        but can be updated using the <code>Date2JD</code> function.
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <code>RHSCubeSat</code>
+      </td>
+      <td>
+        Calculates the right-hand-side for a CubeSat orbit and attitude
+        dynamical model (with state described in the previous section). Returns
+        a data structure which includes Julian date, spacecraft mass, inertia
+        matrix, surface parameters, power system parameters, atmospheric
+        parameters, control system parameters, etc.
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <code>Dist</code>
+      </td>
+      <td>
+        Outputs the disturbance data structure including forces and torques from
+        aerodynamic, solar pressure, magnetic, and gravitational disturbances.
+        Generated within <code>RHSCubeSat</code> and relies on other models.
+      </td>
+    </tr>
+  </tbody>
+</table>
 
 # Questions
 
