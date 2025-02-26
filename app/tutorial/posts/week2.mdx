@@ -27,6 +27,8 @@ For our spacecraft our dynamical model will consist of the following state vecto
 
 The SCT code uses a numerical methods (specifically [RK4](https://en.wikipedia.org/wiki/Runge%E2%80%93Kutta_methods)) to propagate the state vector and simulate our spacecraft over time.
 
+Note that this state vector can be reduced to only consider the orbital/attitude state or be augmented with other time varying parameters e.g. communication.
+
 # Tutorial
 
 Let’s begin by running the simulation:
@@ -48,8 +50,7 @@ Let’s begin by running the simulation:
   `SCTAcademic\SC\SCMat`) as well as updating the calling code in `PltOrbit.m`
 </aside>
 
-This simulation includes gravity, drag and radiation pressure. The satellite is initialised pointing to the Earth with a rotation equal to the orbit rate, to nominally maintain that pointing. The z body axis
-is pointed towards the Earth (nadir).
+This simulation includes gravity, drag and radiation pressure. The satellite is initialised pointing to the Earth with a rotation equal to the orbit rate, to nominally maintain that pointing. The z-body axis of the satellite points towards the Earth (nadir)
 
 Attitude is maintained with magnetic torquers which are modelled as a dipole (we’ll explore this in more detail in Week 7).
 
