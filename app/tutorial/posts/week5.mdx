@@ -55,11 +55,7 @@ We will begin by simply simulating power generation from a solar array cell befo
 
 </aside>
 
-You should end up producing a plot like this…
-
-[DEMO RESULTS]
-
-<aside className="bg-violet-50 rounded-lg py-1 px-4 my-4">
+<aside className='bg-violet-50 rounded-lg py-1 px-4 my-4'>
   🤔 **Q.** How is the power calculated and why is it fluctuating? _Hint: Look
   inside the inbuilt demo and the default struct coded in the `SolarCellPower.m`
   function._
@@ -80,11 +76,75 @@ You should end up producing a plot like this…
 
 </aside>
 
-[DEMO RESULTS]
+<table className='mt-8'>
+  <thead>
+    <tr>
+      <th>Function</th>
+      <th>What it does</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>
+        <code>CubeSatModel</code>
+      </td>
+      <td>
+        Generates the faces and vertices for a CubeSat and data for use in{" "}
+        <code>RHSCubeSat</code>. Includes default parameters for wall thickness,
+        material density, optical properties, and additional parameters like
+        solar wing locations.
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <code>DrawCubeSat</code>
+      </td>
+      <td>
+        Renders and displays the output from <code>CubeSatModel</code>.
+      </td>
+    </tr>
+    <tr>
+      <td className='pr-4'>
+        <code>QLVLH</code>
+      </td>
+      <td>
+        Generates the quaternions that convert from ECI to LVLH coordinate
+        frames.
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <code>SunV1</code>
+      </td>
+      <td>
+        Generates a vector to the Sun in the Earth-centered inertial frame,
+        based on a default Julian Date Number (jD0) set as 2010/01/01 00:00:00,
+        but can be updated using the <code>Date2JD</code> function.
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <code>Eclipse</code>
+      </td>
+      <td>
+        Computes eclipses. See Week 5 lecture slides for full details on the
+        calculation.
+      </td>
+    </tr>
+    <tr>
+      <td className='pr-4'>
+        <code>SolarCellPower</code>
+      </td>
+      <td>
+        Computes the solar cell power, can return a default data structure.
+      </td>
+    </tr>
+  </tbody>
+</table>
 
 # Conduct a power simulation for your chosen mission
 
-<aside className="bg-violet-50 rounded-lg py-0.5 px-4 my-4">
+<aside className='bg-violet-50 rounded-lg py-0.5 px-4 my-4'>
   💡 This is a really important sub-system to simulate well as it impacts nearly
   all other systems and in turn will prove that your spacecraft system design is
   feasible.
