@@ -1,0 +1,151 @@
+---
+title: "7. Attitude control in SCT"
+summary: "Demo two methods of attitude control"
+---
+
+# Preamble
+
+Space missions often require precise satellite pointing for mission objectives such as payload needs (e.g., imaging), communications, and solar arrays. Determining spacecraft attitude is challenging due to factors like establishing a reference frame and disturbance torques from solar radiation, gravitational gradients, aerodynamics, magnetic forces etc.
+
+## Theory
+
+This topic is quite theory heavy so I recommend having a good read of Week 7 Lecture Slides and Chapters 7, 8 and 18 from your Spacecraft Attitude and Orbit Control textbook.
+
+### Gravity gradient stabilisation
+
+This tutorial will demonstrate a CubeSat with gravity gradient stabilisation.
+
+- This method of stabilisation relies on the fact that the gravitational force exerted on different parts of the satellite varies depending on its distance from the Earth.
+- This difference creates a torque that can naturally align the satellite along the Earth's gravity vector, with the long axis of the satellite pointing towards the center of the Earth.
+
+<aside className='flex justify-center'>
+  ![SCT file structure](/images/7.1.png)
+</aside>
+
+<div className='text-xs italic w-3/4 m-auto'>
+  [1] Dragonsat 1 model with boom deployed. Credit: Julio Zorita
+</div>
+
+### Reference frames and quaternions
+
+- **Earth Centered Inertial (ECI):** centered at the Earth's center, with axes fixed meaning it doesn't rotate with the Earth.
+- **Local Vertical, Local Horizontal (LVLH):** local reference frame attached to the spacecraft, oriented relative to the Earth and its orbit.
+- **Quaternions** represent a rotation around a specific axis by a certain angle.
+
+<aside className='flex justify-center'>
+  ![SCT file structure](/images/7.2.png)
+</aside>
+
+# Tutorial
+
+## Gravity gradient stabilisation
+
+We’ll begin by simulating a CubeSat that uses a gravity gradient boom to stabilise itself along the z-axis in its LVLH frame. Run `CubeSatGGStablilized.m` inside of `/CubeSat/Demos/Simulation` .
+
+```matlab
+% Navigate to the demos directory
+>> pwd
+'~/SCTAcademic/CubeSat/Demos/Simulation'
+
+% Run the simulation
+>> CubeSatGGStabilized
+```
+
+The boom is along the Z axis in the body frame and produces restoring torques around X and
+Y. For modelling the gravity gradient boom, put a mass of 0.1 kg 50 cm from the CM of the
+spacecraft on Line 66. Now, run the simulation again, what do you notice?
+
+Here are some key functions…
+
+<aside>
+
+<table className='mt-8'>
+  <thead>
+    <tr>
+      <th>Function</th>
+      <th>What it does</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td className='pr-4'>
+        <code>InertiaCubeSat</code>
+      </td>
+      <td>
+        Compute the inertia of a CubeSat. This assumes the mass is uniformly
+        distributed through the volume. This is a good first cut.
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <code>MassStructure</code>
+      </td>
+      <td>
+        This is a data structure that represents the mass properties of the
+        CubeSat. Used for modelling the gravity gradient boom.
+      </td>
+    </tr>
+    <tr>
+      <td className='pr-4'>
+        <code>QLVLH</code>
+      </td>
+      <td>
+        Generates the quaternions that convert from ECI to LVLH coordinate
+        frames.
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <code>RHSCubeSat</code>
+      </td>
+      <td>
+        Right-hand-side for a CubeSat orbit and attitude dynamical model.
+        Includes drag and optical surface disturbances, gravity gradient, rigid
+        body dynamics and power. Magnetic dipole and control torques are not
+        activated.
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <code>AnimQ</code>
+      </td>
+      <td>
+        Animate the evolution of a quaternion over time by converting the
+        quaternion into direction cosine matrix (transformation matrix).
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+</aside>
+
+## Attitude control with magnetorquers
+
+The example we saw in Week 2 `CubeSatSimulation.m` in `/SCTAcademic/CubeSat/Demos/Simulation` actually already simulates attitude control with magnetorquers. However, here we’ll take a more in-depth look at how the magnetorquers are modelled and dive deeper into the code.
+
+<aside className='flex justify-center'>
+  ![SCT file structure](/images/7.3.png)
+</aside>
+
+The dipole model of the Earth's magnetic field is a first order approximation of the rather complex true Earth's magnetic field (Wikipedia). The satellite is also considered as a residual dipole.
+
+`BDipole`: Computes the geocentric magnetic field based on a tilted dipole model. See the
+figure above for the Earth’s magnetic field.
+
+# Questions
+
+1. Compare the resulting gravity gradient torques to those produced by the constant magnetic dipole. What are your findings?
+
+# Things to try
+
+1. Experiment with placing different masses at different distances in the gravity gradient stabilised satellite.
+2. Try zero magnetic dipole, and larger or smaller values. Hint: with a strong enough magnetic dipole the satellite will align itself to the Earth's magnetic field. The magnetic field is the same. The larger magnetic dipole indicates the larger magnetic torque.
+3. Plot the force due to spherical gravity (same as in Week 2). Hints: 1) add a new variable to save this in RHSCubeSat.m: the second term in the equation on L144 indicates the spherical gravity force. Save it to fGrav for example, similar to fOptical and fAerodyn. Then on line 167 save the new fGrav variable into the dist data structure. 2) at the line 171 of CubeSatSimulation.m, you can obtain the gravity from the dist for plot, using the existing fOptical and fAerodyn for reference. 3) Plot the gravity at line 211.
+
+# Simulating ADCS for your satellite mission
+
+1. Update your initial orbit and attitude values from W2 if necessary.
+2. Adapt the key parameters according to the attitude sensors/actuators you have chosen for the attitude subsystem.
+3. Demonstrate one **passive** attitude control method, such as the gravity gradient stabilisation above or a damping system by using the function `SpacecraftWithDamping.m` under the directory of `/SCTAcademic/CubeSat/Demos/Simulation/`.
+4. Demonstrate one **active** attitude control method, e.g. using reaching wheels or magnetorquers. Refer to `DesignMagneticTorquer.m` in the directory of `/SCTAcademic/CubeSat/Demos/Design/` and `CubeSatRWASimulation.m` in the directory of `/SCTAcademic/CubeSat/Demos/Simulation/`. These examples, incorporate a PID control algorithm. If you demonstrate the PID controller for your own CubeSat, you will be awarded an extra 10 marks as a bonus for your final report! 😮
+5. Generate plots and present them into your reports with necessary analysis.
